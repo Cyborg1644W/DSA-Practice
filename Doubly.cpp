@@ -1,5 +1,6 @@
 #include <iostream>
 #include <sstream>
+#include <fstream>
 
 struct Account {
     string name;
@@ -19,11 +20,11 @@ struct Node {
 class Bank {
 private:
     Node *head;
-    Node *tail; // <-- Added tail pointer
+    Node *tail;
 public:
     Bank() {
         head = NULL;
-        tail = NULL; // <-- Initialize to NULL
+        tail = NULL; 
     }
 
     ~Bank() {
@@ -32,14 +33,13 @@ public:
             p = head;
             head = head->next;
             delete(p);
-        }
-        // Tail is naturally destroyed as the nodes are deleted
+        }   
     }
 
     void addAccount(Account info);
     void deleteAccount(string name);
     void displayForward();
-    void displayBackward();
+    void save();
 };
 
 void Bank::addAccount(Account info) {
@@ -97,3 +97,25 @@ void Bank::deleteAccount(string name) {
     }
 }
 
+void Bank::displayForward() {
+    Node *p;
+    p = head;
+
+    while(p != NULL) {
+        cout << p->data.name << " " << p->data.accountID << " " << p->data.balance << endl;
+        p = p->next;
+    }
+}
+
+void Bank::save() {
+    ofstream File("Accounts.csv");
+    if(!File.is_open()) {
+        cout << "Error\n";
+        return;
+    }
+
+    for(Node *p = head; p != NULL; p = p->next) {
+        File << p->data.name << ',' << p->data.accountID << ',' << p->data.balance << endl;
+    }
+    File.close()
+}
