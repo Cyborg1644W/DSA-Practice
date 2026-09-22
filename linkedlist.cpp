@@ -4,8 +4,8 @@ using namespace std;
 
 
 struct Account {
-    string accountID;
     string name;
+    int accountID;
     double balance;
 }
 
