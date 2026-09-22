@@ -119,3 +119,13 @@ void Bank::save() {
     }
     File.close()
 }
+
+int recursiveSum(Node *p) {
+    if (p == NULL) {
+        return 0;
+    }
+
+    return p->data.balance + recursiveSum(Node *p);
+}
+
+
